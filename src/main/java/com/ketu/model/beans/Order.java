@@ -1,12 +1,29 @@
 package com.ketu.model.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="orders")
 public class Order {
 	
+	@Id
+	@GeneratedValue (strategy = GenerationType.SEQUENCE)
+	private int id;
 	String itemDesc;
 	int quantity;
 	double price;
 	double total;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getItemDesc() {
 		return itemDesc;
 	}
