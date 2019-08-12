@@ -33,8 +33,10 @@ public class MainController {
 			@RequestParam("username") String username, 
 			@RequestParam("password") String password) {
 		User user = userService.get(username, password);
-		if(user==null)
-			return new ModelAndView("login");
-		return new ModelAndView("index");
+		if(user!=null) {
+			request.getSession().setAttribute("authenticatedUser", user);
+			return new ModelAndView("index");
+		}
+		return new ModelAndView("login");
 	}
 }

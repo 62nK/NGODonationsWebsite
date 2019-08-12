@@ -1,7 +1,18 @@
 package com.ketu.model.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="users")
 public class User {
 	
+	@Id
+	@GeneratedValue (strategy = GenerationType.SEQUENCE)
+	private int id;
 	String firsrtName;
 	String lastName;
 	String email;
