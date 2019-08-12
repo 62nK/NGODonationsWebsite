@@ -8,9 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Log in</title>
 <link rel="stylesheet" href="styles/stylesheet.css" />
-
 </head>
 <body>
+
+<div class="header"></div>
+	<div class="sidebar"></div>
+
 	<form:form method="POST" action="signin">
 		<table>
 			<tr>
@@ -26,5 +29,6 @@
 			</tr>
 			</table>
 	</form:form>
+	<div class="footer"></div>
 </body>
 </html>
