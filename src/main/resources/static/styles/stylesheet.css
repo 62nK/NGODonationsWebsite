@@ -1,0 +1,29 @@
+* { box-sizing:border-box; }
+
+img {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 150px;
+}
+body { 
+	background:url(https://static.vecteezy.com/system/resources/previews/000/121/190/original/free-shopping-icons-vector.jpg); 
+  font-family:'Roboto';
+  width:900px; 
+  margin:30px auto 0; 
+  display:block; 
+  padding:10px 50px 50px;
+}
+table{
+	background: #DEF;
+	border-radius: 4px;
+	
+}
+tr{
+	border-radius: 4px;
+	
+}
+td{	
+	border-radius: 4px;
+	text-align: center;
+}
