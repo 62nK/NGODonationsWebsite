@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories("com.tariq.models.repos") 
 @EntityScan("com.ketu.model.beans")
-@ComponentScan("com.andrea.controllers")
+@ComponentScan({"com.andrea.controllers","com.tariq.models.services"})
 @SpringBootApplication
 public class NgoDonationsWebsiteApplication {
 

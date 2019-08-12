@@ -9,6 +9,7 @@ public interface UserRepo extends CrudRepository<User, Long>{
 //	List<ProductEntity> findByName(String name);
 	User findById(long id);
 	List<User> findAll();
-
+	User findByUsername(String username);
+	
 }
 

@@ -36,6 +36,9 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
+	public String getPasswd() {
+		return passwd;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}

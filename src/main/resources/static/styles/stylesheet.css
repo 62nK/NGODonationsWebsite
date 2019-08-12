@@ -1,5 +1,33 @@
 * { box-sizing:border-box; }
-
+.header{
+  width: 100%;
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+  border-radius: 6px;
+}
+.container{
+   width: 100%;
+   margin-top: 30px;
+   background: red;
+     border-radius: 6px;
+     height: 600px;
+}
+.sidenav {
+  height: 600px; /* Full-height: remove this if you want "auto" height */
+  width: 20%; /* Set the width of the sidebar */
+  left: 0;
+  background-color: #fff; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding: 60px;
+  border-radius: 6px;
+  float: left;
+}
+.content{
+  width:80%;
+}
 img {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -7,7 +35,7 @@ img {
 	width: 150px;
 }
 body { 
-	background:url(https://static.vecteezy.com/system/resources/previews/000/121/190/original/free-shopping-icons-vector.jpg); 
+	background: #000;
   font-family:'Roboto';
   width:900px; 
   margin:30px auto 0; 

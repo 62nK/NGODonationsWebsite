@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ketu.model.beans.User;
+import com.tariq.models.services.UserService;
 
 @Controller
 @RequestMapping(path="/")
@@ -30,12 +31,19 @@ public class MainController {
 	
 	@RequestMapping(path="signin", method=RequestMethod.POST)
 	public ModelAndView signin(
+			HttpServletRequest request,
 			@RequestParam("username") String username, 
 			@RequestParam("password") String password) {
-		User user = userService.get(username, password);
-		if(user!=null) {
+		ModelAndView mv = new ModelAndView();
+//		User user = userService.get(username, password);
+		User user = userService.findByUsername(username);
+		if(user.getPasswd().equals(password)) {
 			request.getSession().setAttribute("authenticatedUser", user);
-			return new ModelAndView("index");
+			mv.setViewName("home");
+			return mv;
+		}
+		else {
+			mv.addObject("AuthenticationException", "invalid user credentials");
 		}
 		return new ModelAndView("login");
 	}
