@@ -1,57 +1,88 @@
-* { box-sizing:border-box; }
-.header{
-  width: 100%;
-  padding: 60px;
-  text-align: center;
-  background: #1abc9c;
-  color: white;
-  font-size: 30px;
-  border-radius: 6px;
+:root { 
+	--maincolor: #40E0D0;
 }
-.container{
-   width: 100%;
-   margin-top: 30px;
-   background: red;
-     border-radius: 6px;
-     height: 600px;
+
+* {
+	box-sizing: border-box;
 }
+
+.header {
+	width: 100%;
+	padding: 60px;
+	text-align: center;
+	background: var(--maincolor);
+	color: white;
+	font-size: 30px;
+	border-radius: 6px;
+}
+
+.footer {
+	width: 100%;
+	padding: 30px;
+	text-align: center;
+	background: var(--maincolor);
+	color: white;
+	font-size: 30px;
+	border-radius: 6px;
+	margin-top: 30px;
+	
+}
+
+.container {
+	width: 100%;
+	margin-top: 30px;
+	border-radius: 6px;
+	height: 600px;
+	display:flex;
+	justify-content:space-between;
+}
+
 .sidenav {
-  height: 600px; /* Full-height: remove this if you want "auto" height */
-  width: 20%; /* Set the width of the sidebar */
-  left: 0;
-  background-color: #fff; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding: 60px;
-  border-radius: 6px;
-  float: left;
+	height: 600px; /* Full-height: remove this if you want "auto" height */
+	width: 20%; /* Set the width of the sidebar */
+	left: 0;
+	background-color: var(--maincolor);
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding: 60px;
+	border-radius: 6px;
+	float: left;
 }
-.content{
-  width:80%;
+
+.dynamic-content {
+	width: 80%; 
+	background-color: var(--maincolor);
+	border-radius: 6px;
+	height: 600px; /* Full-height: remove this if you want "auto" height */
+	margin-left: 10px;
+	padding: 20px;
+	
 }
+
 img {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	padding: 5px;
 	width: 150px;
 }
-body { 
-	background: #000;
-  font-family:'Roboto';
-  width:900px; 
-  margin:30px auto 0; 
-  display:block; 
-  padding:10px 50px 50px;
+
+body {
+	font-family: 'Roboto';
+	width: 900px;
+	margin: 30px auto 0;
+	display: block;
+	padding: 10px 50px 50px;
 }
-table{
+
+table {
 	background: #DEF;
 	border-radius: 4px;
-	
 }
-tr{
+
+tr {
 	border-radius: 4px;
-	
 }
-td{	
+
+td {
 	border-radius: 4px;
 	text-align: center;
 }

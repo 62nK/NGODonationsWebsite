@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,19 +11,17 @@
 
 </head>
 <body>
-<jsp:include page="_header.html"/>  
-
-	<h1>NGO DONATION website</h1>
+	<%@ include file="_header.html"%>
+	<!-- static loading at compile time -->
 	<div class="container">
-		<div class="sidenav"></div>
+		<%@ include file="_sidenav.html"%>
+		<!-- static loading at compile time -->
 
-		<div class="content">
-			<h2>
+		<div class="dynamic-content">
 				<a href=login>log in</a>
-			</h2>
 		</div>
 	</div>
-<jsp:include page="_footer.html"/>  
+	<%@ include file="_footer.html"%>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
 
 <th:block th:include="/_header"></th:block>
 
-	<div class="sidebar"></div>
+	<div class="sidenav"></div>
 
 	<form:form method="POST" action="signin">
 		<table>
