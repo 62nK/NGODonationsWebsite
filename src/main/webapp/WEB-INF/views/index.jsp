@@ -9,11 +9,19 @@
 
 </head>
 <body>
-	<h1>NGO DONATION website</h1>
+<jsp:include page="_header.html"/>  
 
-	<h2>
-		1. <a href=login>List of Product</a>
-	</h2>
+	<h1>NGO DONATION website</h1>
+	<div class="container">
+		<div class="sidenav"></div>
+
+		<div class="content">
+			<h2>
+				<a href=login>log in</a>
+			</h2>
+		</div>
+	</div>
+<jsp:include page="_footer.html"/>  
 
 </body>
 </html>

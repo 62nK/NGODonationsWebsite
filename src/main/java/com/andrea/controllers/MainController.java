@@ -4,32 +4,50 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.ketu.model.beans.User;
 import com.tariq.models.services.UserService;
 
 @Controller
-@RequestMapping(path="/")
+//@RequestMapping(path="/")
+//@EnableWebMvc
+@Transactional
 public class MainController {
 	
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(path="/", method=RequestMethod.GET)
+	@RequestMapping("/")
+	public String init(
+//			HttpServletRequest request,
+//			Model model
+			) {
+//		model.addAttribute("command", new User());
+//		User user = (User) request.getSession().getAttribute("user");
+//		if(user==null)
+//			return "index";
+		System.out.println("sup");
+		return "index";
+	}
+	
+	@RequestMapping(path="/login", method=RequestMethod.GET)
 	public ModelAndView validate(
 			HttpServletRequest request) {
 		
 		User user = (User) request.getSession().getAttribute("user");
 		if(user==null)
 			return new ModelAndView("login");
-		return new ModelAndView("index");
+		return new ModelAndView("");
 	}
 	
-	@RequestMapping(path="signin", method=RequestMethod.POST)
+	@RequestMapping(path="/signin", method=RequestMethod.POST)
 	public ModelAndView signin(
 			HttpServletRequest request,
 			@RequestParam("username") String username, 

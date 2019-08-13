@@ -11,24 +11,26 @@
 </head>
 <body>
 
-<div class="header"></div>
+<th:block th:include="/_header"></th:block>
+
 	<div class="sidebar"></div>
 
 	<form:form method="POST" action="signin">
 		<table>
 			<tr>
 				<td><form:label path="username">username</form:label></td>
-				<td><form:input path="username" value="${username}" /></td>
+				<td><form:input path="username" value="${user.username}" /></td>
 			</tr>
 			<tr>
 				<td><form:label path="password" type="password">password</form:label></td>
-				<td><form:input path="password" value="${password}" /></td>
+				<td><form:input path="password" value="${user.passwd}" /></td>
 			</tr>		
 			<tr>
 				<td colspan="3"><input type="submit" value="Log In" /></td>
 			</tr>
 			</table>
 	</form:form>
-	<div class="footer"></div>
+	<th:block th:include="/_footer"></th:block>
+	
 </body>
 </html>
