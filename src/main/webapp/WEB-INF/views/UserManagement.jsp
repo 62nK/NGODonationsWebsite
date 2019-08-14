@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Log in</title>
 <link rel="stylesheet" href="styles/stylesheet.css" />
+
+<script type="text/javascript" src="Javascript/js.js"></script>
 </head>
 <body>
 
@@ -33,7 +35,40 @@
 				<td>${User.lastName }</td>
 				<td>${User.email}</td>
 				<td>${User.role}</td>
-        		<td><a href="user/edit?id=${user.id}">edit</a></td>
+        		<td><a href="user/edit?id=${user.id}">
+        		
+        		
+        		<dialog id="favDialog">  
+								<form method="dialog">
+									First name: <input type="text" name="FirstName"
+										value="FirstName"><br> Last name: <input
+										type="text" name="LastName" value="LastName"><br>
+									Email: <input type="email" name="Email" value="email"><br>
+									Role: <input type="text" name="Role" value="role"><br>
+
+									   
+									<menu>
+										     
+										<button value="cancel">Cancel</button>
+										     
+										<button id="confirmBtn" value="default">Confirm</button>
+										   
+									</menu>
+									 
+								</form>
+								</dialog>
+
+								<menu>
+									 
+									<button id="updateDetails">Update details</button>
+								</menu> <output aria-live="polite"></output>
+        		
+        		
+        		
+        		
+        		</a></td>
+        		
+        		
 				<td><a href="user/remove?id=${user.id}">remove</a></td>
 			</tr>
 		</table>
