@@ -28,7 +28,7 @@ public class MainController {
 	public ModelAndView validate(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("authenticatedUser");
 		if (user == null)
-			return new ModelAndView("index");
+			return new ModelAndView("UserManagement");
 		return new ModelAndView("home");
 	}
 
