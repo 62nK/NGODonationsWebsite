@@ -20,13 +20,13 @@ import com.tariq.models.services.UserService;
 @Controller
 @Transactional
 public class MainController {
-
+	
 	@Autowired
 	UserService userService;
 
 	@RequestMapping("/")
 	public ModelAndView validate(HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute("authenticatedUser");
 		if (user == null)
 			return new ModelAndView("index");
 		return new ModelAndView("home");
@@ -60,5 +60,4 @@ public class MainController {
 		}
 		return mv;
 	}
-	
 }
