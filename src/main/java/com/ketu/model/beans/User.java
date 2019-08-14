@@ -1,5 +1,6 @@
 package com.ketu.model.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +19,9 @@ public class User {
 	String email;
 	String phone;
 	String role;
+    @Column(name="username", unique=true)
 	String username;
-	String passwd;
+	String password;
 	
 	public String getFirsrtName() {
 		return firsrtName;
@@ -36,8 +38,8 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-	public String getPasswd() {
-		return passwd;
+	public String getPassword() {
+		return password;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -53,6 +55,21 @@ public class User {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public int getId() {
+		return id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setPassword(String passwd) {
+		this.password = passwd;
 	}
 	
 
