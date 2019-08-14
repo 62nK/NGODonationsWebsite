@@ -1,5 +1,7 @@
 package com.ketu.model.beans;
 
+import java.util.Comparator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +11,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User{
 	
 	public transient static final String role1 = "ADMIN";
 	public transient static final String role2 = "REGULAR";
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
-	private int id;
+	private long id;
 	String firstName;
 	String lastName;
 	String email;
@@ -26,11 +28,11 @@ public class User {
 	String username;
 	String password;
 	
-	public String getFirsrtName() {
+	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirsrtName(String firsrtName) {
-		this.firstName = firsrtName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	public String getLastName() {
 		return lastName;
@@ -59,13 +61,13 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public String getUsername() {
 		return username;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public void setUsername(String username) {
@@ -73,7 +75,14 @@ public class User {
 	}
 	public void setPassword(String passwd) {
 		this.password = passwd;
-	}
+	} 
 	
+	public boolean equals(User u) {
+		return u.getFirstName() == firstName &&
+				u.getLastName() == lastName &&
+				u.getId() == id &&
+				u.getUsername() == username &&
+				u.getPassword() == password;
+	}
 
 }

@@ -24,16 +24,23 @@ public class MainController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping("/")
-	public ModelAndView validate(HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("authenticatedUser");
-		if (user == null)
-			return new ModelAndView("index");
-		return new ModelAndView("home");
+	@RequestMapping(path="/")
+	public ModelAndView validate(HttpServletRequest request, 
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		}
+		else {
+			mv.addObject("users", userService.findAll());
+			mv.setViewName("UserManagement");
+		}
+		return mv;
 	}
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public ModelAndView login(HttpServletRequest request, @ModelAttribute("command") UserLoginForm userLoginForm) {
+	public ModelAndView login(HttpServletRequest request, @ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
 		ModelAndView mv = new ModelAndView("login");
 		mv.addObject("command", new UserLoginForm());
 		mv.addObject("UserLoginForm", new UserLoginForm());
@@ -51,7 +58,7 @@ public class MainController {
 		} else {
 			if (user.getPassword().equals(userLoginForm.getPassword())) {
 				request.getSession().setAttribute("authenticatedUser", user);
-				mv.setViewName("home");
+				mv.setViewName("UserManagement");
 				return mv;
 			} else {
 				mv.setViewName("login");

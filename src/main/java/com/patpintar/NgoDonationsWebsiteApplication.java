@@ -25,17 +25,30 @@ public class NgoDonationsWebsiteApplication {
 	UserService userService;
 	
 	@Bean
-    public User createAdmin(@Value("${admin.username}") String adminusername, @Value("${admin.password}") String adminpassword) {
+    public User createAdmin(
+    		@Value("${admin.username}") String adminusername, 
+    		@Value("${admin.password}") String adminpassword,
+    		@Value("${admin.name.first}") String adminfirstname,
+    		@Value("${admin.name.last}") String adminlastname) {
 		User admin = new User();
 		admin.setPassword(adminpassword);
 		admin.setUsername(adminusername);
+		admin.setFirstName(adminfirstname);
+		admin.setLastName(adminlastname);
+		admin.setRole(User.role1);
 		return admin;
     }
 	
 	@Autowired
 	public void initDatabase(User admin) {
-		if(userService.count()<=0)
+		User firstAdmin = userService.findById(1l);
+		if(firstAdmin==null) {
 			userService.save(admin);
+		}
+		else if(!firstAdmin.equals(admin)){
+			userService.delete(firstAdmin);
+			userService.save(admin);
+		}
 	}
 	
 	public static void main(String[] args) {

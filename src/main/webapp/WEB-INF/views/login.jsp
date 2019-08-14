@@ -13,8 +13,8 @@
 
 	<%@ include file="_header.html"%>
 	<div class="container">
-		<div class="sidenav"></div>
 		<div class="dynamic-content">
+		<p>Login with your username and password</p>
 			<p class="exception">${AuthenticationException}</p>
 			<form:form method="POST" action="signin"
 				modelAttribute="UserLoginForm">

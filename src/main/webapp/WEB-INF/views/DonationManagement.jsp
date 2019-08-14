@@ -13,7 +13,8 @@
 <div class="header">NGO Donations</div>
 
 <div class="container">
-	<div class="sidenav">Donation Management</div>
+	<div class="sidenav"><%@ include file="_menu.jsp"%>
+</div>
   
 <div class="content">
 
