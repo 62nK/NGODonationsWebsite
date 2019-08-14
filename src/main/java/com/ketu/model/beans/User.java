@@ -13,7 +13,7 @@ public class User {
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
 	private int id;
-	String firsrtName;
+	String firstName;
 	String lastName;
 	String email;
 	String phone;
@@ -22,10 +22,10 @@ public class User {
 	String passwd;
 	
 	public String getFirsrtName() {
-		return firsrtName;
+		return firstName;
 	}
 	public void setFirsrtName(String firsrtName) {
-		this.firsrtName = firsrtName;
+		this.firstName = firsrtName;
 	}
 	public String getLastName() {
 		return lastName;

@@ -27,10 +27,10 @@
 		</tr>
 		<c:set var="total" value="0"></c:set>
 			<tr>
-				<td>${FirstName }</td>
-				<td>${MM/DD/YYY }</td>
-				<td>${$xxx}</td>
-				<td>${type}</td>
+				<td>${Donation.name}</td>
+				<td>${Donation.date}</td>
+				<td>${Donation.amt}</td>
+				<td>${Donation.DonationType}</td>
         </tr>
 		</table>
 	</form:form>
