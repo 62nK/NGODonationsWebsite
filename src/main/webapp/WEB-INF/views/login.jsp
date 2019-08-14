@@ -11,26 +11,32 @@
 </head>
 <body>
 
-<th:block th:include="/_header"></th:block>
+	<%@ include file="_header.html"%>
+	<div class="container">
+		<div class="sidenav"></div>
+		<div class="dynamic-content">
+			<p class="exception">${AuthenticationException}</p>
+			<form:form method="POST" action="signin"
+				modelAttribute="UserLoginForm">
+				<table>
+					<tr>
+						<td><form:label path="username">username</form:label></td>
+						<td><form:input path="username"
+								value="${userLoginForm.username}" /></td>
+					</tr>
+					<tr>
+						<td><form:label path="password" type="password">password</form:label></td>
+						<td><form:input path="password" type="password"
+								value="${userLoginForm.password}" /></td>
+					</tr>
+					<tr>
+						<td colspan="3"><input type="submit" value="Log In" /></td>
+					</tr>
+				</table>
+			</form:form>
+		</div>
+	</div>
+	<%@ include file="_footer.html"%>
 
-	<div class="sidenav"></div>
-
-	<form:form method="POST" action="signin">
-		<table>
-			<tr>
-				<td><form:label path="username">username</form:label></td>
-				<td><form:input path="username" value="${user.username}" /></td>
-			</tr>
-			<tr>
-				<td><form:label path="password" type="password">password</form:label></td>
-				<td><form:input path="password" value="${user.passwd}" /></td>
-			</tr>		
-			<tr>
-				<td colspan="3"><input type="submit" value="Log In" /></td>
-			</tr>
-			</table>
-	</form:form>
-	<th:block th:include="/_footer"></th:block>
-	
 </body>
 </html>

@@ -100,18 +100,9 @@ public class UserService implements UserRepo {
 		return ur.findAll();
 	}
 	
-<<<<<<< Updated upstream
 	public User validateUser(String username, String password){
 		return new User();
 	}
 
-=======
-	public User validateUser(UserRepo ur, String username) {
-	    TypedQuery<User> query = ur.createQuery(
-	        "SELECT c FROM Country c WHERE c.name = :name", User.class);
-	    return query.setParameter("name", username).getSingleResult();
-	  } 
 	
->>>>>>> Stashed changes
-
 }
