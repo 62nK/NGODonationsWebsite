@@ -33,7 +33,7 @@
 				<td>${LastName }</td>
 				<td>${Email}</td>
 				<td>${Role}</td>
-        		<td>${Edit }</td>
+        		<td><a href="/edit"></td>
 				<td>${ Remove}</td>
 		</table>
 	</form:form>

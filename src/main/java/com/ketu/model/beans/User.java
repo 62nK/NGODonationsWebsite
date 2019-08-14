@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Table(name="users")
 public class User {
 	
+	public transient static final String role1 = "ADMIN";
+	public transient static final String role2 = "REGULAR";
+	
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
 	private int id;
