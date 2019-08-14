@@ -12,7 +12,7 @@ import com.tariq.models.services.UserService;
 
 @EnableJpaRepositories("com.tariq.models.repos") 
 @EntityScan("com.ketu.model.beans")
-@ComponentScan({"com.andrea.controllers","com.tariq.models.services", "com.andrea.configuration.DatabaseInitializer"})
+@ComponentScan({"com.andrea.controllers","com.tariq.models.services"})
 @SpringBootApplication
 public class NgoDonationsWebsiteApplication {
 	

@@ -3,6 +3,8 @@ package com.tariq.models.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,5 +104,5 @@ public class UserService implements UserRepo {
 		return new User();
 	}
 
-
+	
 }
