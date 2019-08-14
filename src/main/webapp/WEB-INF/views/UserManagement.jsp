@@ -29,12 +29,22 @@
 		</tr>
 		<c:set var="total" value="0"></c:set>
 			<tr>
+<<<<<<< HEAD
 				<td>${FirstName }</td>
 				<td>${LastName }</td>
 				<td>${Email}</td>
 				<td>${Role}</td>
         		<td><a href="/edit"></td>
 				<td>${ Remove}</td>
+=======
+				<td>${User.firstName}</td>
+				<td>${User.lastName }</td>
+				<td>${User.email}</td>
+				<td>${User.role}</td>
+        		<td><a href="user/edit?id=${user.id}">edit</a></td>
+				<td><a href="user/remove?id=${user.id}">remove</a></td>
+			</tr>
+>>>>>>> 544173a209a2e0191c6e17b9a228b4a61ca974f4
 		</table>
 	</form:form>
   </div>

@@ -13,27 +13,16 @@
 <div class="header">NGO Donations</div>
 
 <div class="container">
-	<div class="sidenav">Donation Management</div>
+	<div class="sidenav">User View</div>
   
 <div class="content">
-
-	<form:form method="POST" action="signin">
-		<table cellpadding="2" cellspacing="2" border="1">
-		<tr>
-			<th>Name</th>
-			<th>Date</th>
-			<th>Amount</th>
-			<th>Donation</th>
-		</tr>
-		<c:set var="total" value="0"></c:set>
-			<tr>
-				<td>${Donation.name}</td>
-				<td>${Donation.date}</td>
-				<td>${Donation.amt}</td>
-				<td>${Donation.DonationType}</td>
-        </tr>
-		</table>
-	</form:form>
+<h3>
+Click any of the type buttons to continue.
+</h3>
+<button>Type 1</button>
+<button>Type 2</button>
+<button>Type 3</button>
+<button>Type 4</button>
   </div>
   </div>
 
