@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="dynamic-content">
 		<p>Login with your username and password</p>
-			<p class="exception">${AuthenticationException}</p>
+			<p class="exception">${Exception}</p>
 			<form:form method="POST" action="signin"
 				modelAttribute="UserLoginForm">
 				<table>

@@ -22,8 +22,7 @@
 		</c:if>
 
 		<div class="dynamic-content">
-			<p class="exception">${AuthenticationException}</p>
-			<p class="exception">${invalidRoleException}</p>
+			<p class="exception">${Exception}</p>
 
 			<c:if test="${displayAdd}">
 				<td><a class="add-user" href="adduser">Add User</a></td>
@@ -55,7 +54,9 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			<p class="exception">${operationStatus}</p>
+			<p class="success">${Success}</p>
+			<p class="exception">${Failure}</p>
+		
 
 			<c:if test="${!empty newUser}">
 				<form:form method="POST" action="/saveuser"
@@ -63,7 +64,7 @@
 					<table>
 						<tr>
 							<td><form:label path="id">id:</form:label></td>
-							<td><form:input path="id" value="${newUser.id}" /></td>
+							<td><form:input path="id" value="${newUser.id}" readonly/></td>
 						</tr>
 						<tr>
 							<td><form:label path="username">username:</form:label></td>

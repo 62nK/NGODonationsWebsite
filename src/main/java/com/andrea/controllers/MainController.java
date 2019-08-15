@@ -108,7 +108,7 @@ public class MainController {
 			mv.addObject("newUser", new User());
 			mv.addObject("users", userService.findAll());
 		} else {
-			mv.addObject("invalidRoleException", insufficientPrivileges);
+			mv.addObject("Exception", insufficientPrivileges);
 		}
 		mv.addObject("displayAdd", false);
 		mv.setViewName("UserManagement");
@@ -130,7 +130,7 @@ public class MainController {
 		User user = userService.findByUsername(userLoginForm.getUsername());
 		if (user == null) {
 			mv.setViewName("login");
-			mv.addObject("AuthenticationException", invalidUser);
+			mv.addObject("Exception", invalidUser);
 		} else {
 			if (user.getPassword().equals(userLoginForm.getPassword())) {
 				request.getSession().setAttribute("authenticatedUser", user);
@@ -144,7 +144,7 @@ public class MainController {
 				return mv;
 			} else {
 				mv.setViewName("login");
-				mv.addObject("AuthenticationException", invalidCredentials);
+				mv.addObject("Exception", invalidCredentials);
 			}
 		}
 		return mv;
@@ -159,14 +159,14 @@ public class MainController {
 			if (authenticatedUser.getId() == id) {
 				mv.addObject("users", userService.findAll());
 				mv.addObject("displayAdd", true);
-				mv.addObject("OperationFail", userEditionFailure);
+				mv.addObject("Failure", userEditionFailure);
 			} else {
 				mv.addObject("newUser", user);
 				mv.addObject("users", userService.findAll());
 				mv.addObject("displayAdd", false);
 			}
 		} else {
-			mv.addObject("invalidRoleException", insufficientPrivileges);
+			mv.addObject("Exception", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.setViewName("UserManagement");
@@ -191,10 +191,10 @@ public class MainController {
 			userService.save(user);
 			if(authenticatedUser.getId() ==id)
 				request.getSession().setAttribute("authenticatedUser", user);
-			mv.addObject("operationStatus", userAdditionSuccess);
+			mv.addObject("Success", userAdditionSuccess);
 			mv.addObject("displayAdd", true);
 		} else {
-			mv.addObject("invalidRoleException", insufficientPrivileges);
+			mv.addObject("Exception", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.addObject("users", userService.findAll());
@@ -210,13 +210,13 @@ public class MainController {
 		if (authenticatedUser.getRole().equals(User.role1)) {
 			mv.addObject("displayAdd", true);
 			if (authenticatedUser.getId() == id) {
-				mv.addObject("operationFail", userDeletionFailure);
+				mv.addObject("Failure", userDeletionFailure);
 			} else {
 				userService.deleteById(id);
-				mv.addObject("operationStatus", userDeletionSuccess);
+				mv.addObject("Success", userDeletionSuccess);
 			}
 		} else {
-			mv.addObject("invalidRoleException", insufficientPrivileges);
+			mv.addObject("Exception", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.addObject("users", userService.findAll());
