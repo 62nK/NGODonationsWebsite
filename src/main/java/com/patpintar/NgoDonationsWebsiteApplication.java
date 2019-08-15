@@ -29,24 +29,22 @@ public class NgoDonationsWebsiteApplication {
     		@Value("${admin.username}") String adminusername, 
     		@Value("${admin.password}") String adminpassword,
     		@Value("${admin.name.first}") String adminfirstname,
-    		@Value("${admin.name.last}") String adminlastname) {
+    		@Value("${admin.name.last}") String adminlastname,
+    		@Value("${admin.email}") String adminemail) {
 		User admin = new User();
 		admin.setPassword(adminpassword);
 		admin.setUsername(adminusername);
 		admin.setFirstName(adminfirstname);
 		admin.setLastName(adminlastname);
+		admin.setEmail(adminemail);
 		admin.setRole(User.role1);
 		return admin;
     }
 	
 	@Autowired
 	public void initDatabase(User admin) {
-		User firstAdmin = userService.findById(1l);
+		User firstAdmin = userService.findByUsername(admin.getUsername());
 		if(firstAdmin==null) {
-			userService.save(admin);
-		}
-		else if(!firstAdmin.equals(admin)){
-			userService.delete(firstAdmin);
 			userService.save(admin);
 		}
 	}

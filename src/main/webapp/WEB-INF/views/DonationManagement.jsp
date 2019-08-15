@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="header">NGO Donations</div>
+	<%@ include file="_header.html"%>
 
 <div class="container">
 	<div class="sidenav"><%@ include file="_menu.jsp"%>
@@ -38,7 +38,7 @@
   </div>
   </div>
 
-	<div class="footer">im the footer </div>
+	<%@ include file="_footer.html"%>
   
 </body>
 </html>

@@ -84,5 +84,8 @@ public class User{
 				u.getUsername() == username &&
 				u.getPassword() == password;
 	}
+	public String toString() {
+		return "user"+"...";
+	}
 
 }
