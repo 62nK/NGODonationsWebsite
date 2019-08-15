@@ -7,9 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
+<<<<<<< HEAD
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User {
+	
+	@Id
+	@GeneratedValue (strategy = GenerationType.SEQUENCE)
+	private int id;
+=======
 @Table(name="users")
 public class User{
 	
@@ -19,6 +29,7 @@ public class User{
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
 	private long id;
+>>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 	String firstName;
 	String lastName;
 	String email;
@@ -28,11 +39,19 @@ public class User{
 	String username;
 	String password;
 	
+<<<<<<< HEAD
+	public String getFirsrtName() {
+		return firstName;
+	}
+	public void setFirsrtName(String firsrtName) {
+		this.firstName = firsrtName;
+=======
 	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+>>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 	}
 	public String getLastName() {
 		return lastName;

@@ -1,8 +1,11 @@
 :root { 
 	--maincolor: #40E0D0;
 	--exceptioncolor: red;
+<<<<<<< HEAD
+=======
 	--successcolor: blue;
 	--failurecolor: green;
+>>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 }
 body{
 	  font-family: Arial, Helvetica, sans-serif;
@@ -76,6 +79,8 @@ h1{
 	color: var(--exceptioncolor);	
 	font-size: 14px;
 }
+<<<<<<< HEAD
+=======
 .success{
 	color: var(--successcolor);	
 	font-size: 14px;
@@ -84,6 +89,7 @@ h1{
 	color: var(--failurecolor);	
 	font-size: 14px;
 }
+>>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 .add-user{
 	text-alignment: right;
 }
@@ -101,8 +107,12 @@ table {
 	background: #DEF;
 	border-radius: 4px;
 	 padding: 20px;
+<<<<<<< HEAD
+	 margin:20px;	
+=======
 	 margin:20px;
 	
+>>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 }
 
 tr {
