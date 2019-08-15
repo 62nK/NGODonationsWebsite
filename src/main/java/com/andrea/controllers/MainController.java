@@ -1,68 +1,251 @@
 package com.andrea.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.andrea.model.info.UserLoginForm;
+import com.ketu.model.beans.Donation;
 import com.ketu.model.beans.User;
+import com.tariq.models.services.DonationService;
 import com.tariq.models.services.UserService;
 
 @Controller
-//@RequestMapping(path="/")
-//@EnableWebMvc
 @Transactional
 public class MainController {
-	
+
 	@Autowired
 	UserService userService;
+	@Autowired
+	DonationService donationService;
 	
-	@RequestMapping("/")
-	public String init(
-//			HttpServletRequest request,
-//			Model model
-			) {
-//		model.addAttribute("command", new User());
-//		User user = (User) request.getSession().getAttribute("user");
-//		if(user==null)
-//			return "index";
-		System.out.println("sup");
-		return "index";
-	}
+	@Value("${exception.authentication.invalidUser}") 
+	String invalidUser;
+	@Value("${exception.authentication.invalidCredentials}") 
+	String invalidCredentials;
+	@Value("${exception.privileges.insufficientPrivileges}") 
+	String insufficientPrivileges;
+	@Value("${failure.user.deletion}") 
+	String userDeletionFailure;
+	@Value("${failure.user.edition}") 
+	String userEditionFailure;
+	@Value("${success.user.insertion}") 
+	String userAdditionSuccess;
+	@Value("${success.user.deletion}") 
+	String userDeletionSuccess;
+	@Value("${success.donation.emptylist}") 
+	String emptyDonationList;
 	
-	@RequestMapping(path="/login", method=RequestMethod.GET)
-	public ModelAndView validate(
-			HttpServletRequest request) {
-		
-		User user = (User) request.getSession().getAttribute("user");
-		if(user==null)
-			return new ModelAndView("login");
-		return new ModelAndView("");
-	}
-	
-	@RequestMapping(path="/signin", method=RequestMethod.POST)
-	public ModelAndView signin(
-			HttpServletRequest request,
-			@RequestParam("username") String username, 
-			@RequestParam("password") String password) {
+	@RequestMapping(path = "/")
+	public ModelAndView validate(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
 		ModelAndView mv = new ModelAndView();
-//		User user = userService.get(username, password);
-		User user = userService.findByUsername(username);
-		if(user.getPasswd().equals(password)) {
-			request.getSession().setAttribute("authenticatedUser", user);
-			mv.setViewName("home");
-			return mv;
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			mv.addObject("users", userService.findAll());
+			mv.addObject("displayAdd", true);
+			mv.setViewName("UserManagement");
 		}
-		else {
-			mv.addObject("AuthenticationException", "invalid user credentials");
-		}
-		return new ModelAndView("login");
+		return mv;
 	}
+	@RequestMapping(path = "/usermanagement", method=RequestMethod.GET)
+	public ModelAndView userManagement(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			if(authenticatedUser.getRole().equals(User.role1)) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.setViewName("UserManagement");
+			} else {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.setViewName("UserView");
+			}
+		}
+		return mv;
+	}
+	@RequestMapping(path = "/donationmanagement", method=RequestMethod.GET)
+	public ModelAndView donationManagement(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			if(authenticatedUser.getRole().equals(User.role1)) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.setViewName("DonationManagement");
+			} else {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.setViewName("UserView");
+			}
+		}
+		return mv;
+	}
+	@RequestMapping(path = "/userview", method=RequestMethod.GET)
+	public ModelAndView userView(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			List<Donation> donations = donationService.findAll();
+			mv.addObject("donations", donations);
+			if(donations.isEmpty())
+				mv.addObject("Success", emptyDonationList);
+			mv.setViewName("UserView");
+		}
+		return mv;
+	}
+	@RequestMapping(path = "/adduser", method = RequestMethod.GET)
+	public ModelAndView addUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			mv.addObject("newUser", new User());
+			mv.addObject("users", userService.findAll());
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+		}
+		mv.addObject("displayAdd", false);
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
+	@RequestMapping(path = "/login", method = RequestMethod.GET)
+	public ModelAndView login(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView("login");
+		mv.addObject("UserLoginForm", new UserLoginForm());
+		return mv;
+	}
+
+	@RequestMapping(path = "/signin", method = RequestMethod.POST)
+	public ModelAndView signin(HttpServletRequest request, @ModelAttribute("UserLoginForm") UserLoginForm userLoginForm,
+			@ModelAttribute("UserInsertion") User newUser) {
+		ModelAndView mv = new ModelAndView();
+		User user = userService.findByUsername(userLoginForm.getUsername());
+		if (user == null) {
+			mv.setViewName("login");
+			mv.addObject("Exception", invalidUser);
+		} else {
+			if (user.getPassword().equals(userLoginForm.getPassword())) {
+				request.getSession().setAttribute("authenticatedUser", user);
+				if (user.getRole().equals(User.role1)) {
+					mv.addObject("users", userService.findAll());
+					mv.setViewName("UserManagement");
+					mv.addObject("displayAdd", true);
+				} else if (user.getRole().equals(User.role2)) {
+					List<Donation> donations = donationService.findAll();
+					mv.addObject("donations", donations);
+					if(donations.isEmpty())
+						mv.addObject("Exception", emptyDonationList);
+					mv.setViewName("UserView");
+				}
+				return mv;
+			} else {
+				mv.setViewName("login");
+				mv.addObject("Exception", invalidCredentials);
+			}
+		}
+		return mv;
+	}
+
+	@RequestMapping(path = "/edituser", method = RequestMethod.GET)
+	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser, @RequestParam("id") int id) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			User user = userService.findById(id);
+			if (authenticatedUser.getId() == id) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.addObject("Failure", userEditionFailure);
+			} else {
+				mv.addObject("newUser", user);
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", false);
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
+	@RequestMapping(path = "/canceluser", method = RequestMethod.GET)
+	public ModelAndView cancelUser(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("displayAdd", true);
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
+	@RequestMapping(path = "/saveuser", method = RequestMethod.POST)
+	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") int id,
+			@ModelAttribute("UserForm") User user) {
+
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			userService.save(user);
+			if(authenticatedUser.getId() ==id)
+				request.getSession().setAttribute("authenticatedUser", user);
+			mv.addObject("Success", userAdditionSuccess);
+			mv.addObject("displayAdd", true);
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		mv.addObject("users", userService.findAll());
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
+	@RequestMapping(path = "/deleteuser", method = RequestMethod.GET)
+	public ModelAndView deleteUser(HttpServletRequest request, @RequestParam("id") long id) {
+
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			mv.addObject("displayAdd", true);
+			if (authenticatedUser.getId() == id) {
+				mv.addObject("Failure", userDeletionFailure);
+			} else {
+				userService.deleteById(id);
+				mv.addObject("Success", userDeletionSuccess);
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		mv.addObject("users", userService.findAll());
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
 }

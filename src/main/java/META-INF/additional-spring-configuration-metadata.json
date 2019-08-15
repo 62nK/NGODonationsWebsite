@@ -1,0 +1,112 @@
+{"properties": [
+  {
+    "name": "admin.username",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.username'"
+  },
+  {
+    "name": "admin.password",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.password'"
+  },
+  {
+    "name": "admin.name.first",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.name.first'"
+  },
+  {
+    "name": "admin.name.last",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.name.last'"
+  },
+  {
+    "name": "admin.role",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.role'"
+  },
+  {
+    "name": "exception.authenticationException",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authenticationException'"
+  },
+  {
+    "name": "exception.authentication.invaliduser",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authentication.invaliduser'"
+  },
+  {
+    "name": "exception.authentication.invalidUser",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authentication.invalidUser'"
+  },
+  {
+    "name": "exception.authentication.invalidCredentials",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authentication.invalidCredentials'"
+  },
+  {
+    "name": "failure.user.deletion",
+    "type": "java.lang.String",
+    "description": "A description for 'failure.user.deletion'"
+  },
+  {
+    "name": "exception.rivileges.insufficientPrivileges",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.rivileges.insufficientPrivileges'"
+  },
+  {
+    "name": "failure.user.edition",
+    "type": "java.lang.String",
+    "description": "A description for 'failure.user.edition'"
+  },
+  {
+    "name": "admin.email",
+    "type": "java.lang.String",
+    "description": "A description for 'admin.email'"
+  },
+  {
+    "name": "exception.rivileges.insufficientPrivileges",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.rivileges.insufficientPrivileges'"
+  },
+  {
+    "name": "exception.rivileges.insufficientPrivileges",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.rivileges.insufficientPrivileges'"
+  },
+  {
+    "name": "exception.rivileges.insufficientPrivileges",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.rivileges.insufficientPrivileges'"
+  },
+  {
+    "name": "exception.authentication.invalidUser",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authentication.invalidUser'"
+  },
+  {
+    "name": "exception.authentication.invalidUser",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.authentication.invalidUser'"
+  },
+  {
+    "name": "exception.privileges.insufficientPrivileges",
+    "type": "java.lang.String",
+    "description": "A description for 'exception.privileges.insufficientPrivileges'"
+  },
+  {
+    "name": "success.user.insertion",
+    "type": "java.lang.String",
+    "description": "A description for 'success.user.insertion'"
+  },
+  {
+    "name": "success.user.deletion",
+    "type": "java.lang.String",
+    "description": "A description for 'success.user.deletion'"
+  },
+  {
+    "name": "success.donation.emptylist",
+    "type": "java.lang.String",
+    "description": "A description for 'success.donation.emptylist'"
+  }
+]}
