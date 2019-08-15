@@ -36,7 +36,55 @@ public class MainController {
 		}
 		return mv;
 	}
-
+	@RequestMapping(path = "/usermanagement", method=RequestMethod.GET)
+	public ModelAndView userManagement(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			if(authenticatedUser.getRole().equals(User.role1)) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.setViewName("UserManagement");
+			} else {
+				mv.setViewName("UserView");
+			}
+		}
+		return mv;
+	}
+	@RequestMapping(path = "/donationmanagement", method=RequestMethod.GET)
+	public ModelAndView donationManagement(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			if(authenticatedUser.getRole().equals(User.role1)) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.setViewName("DonationManagement");
+			} else {
+				mv.setViewName("UserView");
+			}
+		}
+		System.out.println(authenticatedUser.getRole());
+		return mv;
+	}
+	@RequestMapping(path = "/userview", method=RequestMethod.GET)
+	public ModelAndView userView(HttpServletRequest request,
+			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser == null) {
+			mv.setViewName("login");
+		} else {
+			mv.setViewName("UserView");
+		}
+		return mv;
+	}
 	@RequestMapping(path = "/adduser", method = RequestMethod.GET)
 	public ModelAndView addUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser) {
 		ModelAndView mv = new ModelAndView();
@@ -88,14 +136,20 @@ public class MainController {
 	}
 
 	@RequestMapping(path = "/edituser", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request, @RequestParam("id") int id) {
-
+	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser, @RequestParam("id") int id) {
 		ModelAndView mv = new ModelAndView();
 		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
 		if (authenticatedUser.getRole().equals(User.role1)) {
 			User user = userService.findById(id);
-			mv.addObject("editUser", user);
-			mv.addObject("displayAdd", true);
+			if (authenticatedUser.getId() == id) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.addObject("operationStatus", "user cannot not be edited");
+			} else {
+				mv.addObject("newUser", user);
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", false);
+			}
 		} else {
 			mv.addObject("invalidRoleException", "you are missing the privileges to perform this action");
 			mv.addObject("displayAdd", false);
@@ -120,6 +174,8 @@ public class MainController {
 		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
 		if (authenticatedUser.getRole().equals(User.role1)) {
 			userService.save(user);
+			if(authenticatedUser.getId() ==id)
+				request.getSession().setAttribute("authenticatedUser", user);
 			mv.addObject("operationStatus", "user saved successfully!");
 			mv.addObject("displayAdd", true);
 		} else {

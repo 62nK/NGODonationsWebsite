@@ -49,13 +49,13 @@
 							<td><c:out value="${user.lastName}" /></td>
 							<td><c:out value="${user.email}" /></td>
 							<td><c:out value="${user.role}" /></td>
-							<td><a href="admin/user/edit?id=${user.id}">Edit</a></td>
+							<td><a href="edituser?id=${user.id}">Edit</a></td>
 							<td><a href="deleteuser?id=${user.id}">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</c:if>
-			<p class="exception">${AuthenticationException}</p>
+			<p class="exception">${operationStatus}</p>
 
 			<c:if test="${!empty newUser}">
 				<form:form method="POST" action="/saveuser"
@@ -91,8 +91,8 @@
 						<tr>
 							<td><form:label path="role">Role:</form:label></td>
 							<td><select name="role" value="${newUser.role}">
-									<option value="role1">ADMIN</option>
-									<option value="role2">REGULAR</option>
+									<option value="ADMIN">admin</option>
+									<option value="REGULAR">regular</option>
 							</select></td>
 						</tr>
 						<tr>

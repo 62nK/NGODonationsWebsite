@@ -1,6 +1,7 @@
 :root { 
 	--maincolor: #40E0D0;
 	--exceptioncolor: red;
+	--operationcolor: blue;
 }
 body{
 	  font-family: Arial, Helvetica, sans-serif;
@@ -72,6 +73,10 @@ h1{
 }
 .exception{
 	color: var(--exceptioncolor);	
+	font-size: 14px;
+}
+.operation{
+	color: var(--operationcolor);	
 	font-size: 14px;
 }
 .add-user{
