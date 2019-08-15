@@ -12,13 +12,19 @@ public class Donation {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
-	private int id;
+	private long id;
 	String name;
 	String date;
-	double amt;
-	String donationType;
+	double amount;
+	String type;
 	
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -31,17 +37,17 @@ public class Donation {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public double getAmt() {
-		return amt;
+	public double getAmount() {
+		return amount;
 	}
-	public void setAmt(double amt) {
-		this.amt = amt;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
-	public String getDonationType() {
-		return donationType;
+	public String getType() {
+		return type;
 	}
-	public void setDonationType(String donationType) {
-		donationType = donationType;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

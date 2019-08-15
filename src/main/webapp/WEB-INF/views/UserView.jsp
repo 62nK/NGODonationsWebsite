@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Log in</title>
-<link rel="stylesheet" href="styles/stylesheet.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/styles/stylesheet.css" />
 </head>
 <body>
 
@@ -20,9 +21,11 @@
 			<p class="exception">${Exception}</p>
 
 			<h3>Select the donation type</h3>
-			<c:forEach items="${donations}" var="donation">
-						<button>Type 1</button>
-			</c:forEach>
+			<c:if test="${!empty donations}">
+				<c:forEach items="${donations}" var="donation">
+					<input type="submit" value="${donation.type}" name="button" onClick="${donation.id}"/><br>
+				</c:forEach>
+			</c:if>
 			<p class="success">${Success}</p>
 			<p class="failure">${Failure}</p>
 		</div>

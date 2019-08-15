@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Log in</title>
-<link rel="stylesheet" href="/styles/stylesheet.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/styles/stylesheet.css" />
 

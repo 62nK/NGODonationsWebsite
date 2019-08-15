@@ -108,5 +108,25 @@
     "name": "success.donation.emptylist",
     "type": "java.lang.String",
     "description": "A description for 'success.donation.emptylist'"
+  },
+  {
+    "name": "failure.donation.deletion",
+    "type": "java.lang.String",
+    "description": "A description for 'failure.donation.deletion'"
+  },
+  {
+    "name": "failure.donation.edition",
+    "type": "java.lang.String",
+    "description": "A description for 'failure.donation.edition'"
+  },
+  {
+    "name": "success.donation.insertion",
+    "type": "java.lang.String",
+    "description": "A description for 'success.donation.insertion'"
+  },
+  {
+    "name": "success.donation.deletion",
+    "type": "java.lang.String",
+    "description": "A description for 'success.donation.deletion'"
   }
 ]}

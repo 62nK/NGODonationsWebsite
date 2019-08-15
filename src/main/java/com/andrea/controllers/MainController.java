@@ -45,6 +45,14 @@ public class MainController {
 	String userDeletionSuccess;
 	@Value("${success.donation.emptylist}") 
 	String emptyDonationList;
+	@Value("${failure.donation.edition}") 
+	String donationEditionFailure;
+	@Value("${failure.donation.deletion}") 
+	String donationDeletionFailure;
+	@Value("${success.donation.insertion}") 
+	String donationAdditionSuccess;
+	@Value("${success.donation.deletion}") 
+	String donationDeletionSuccess;
 	
 	@RequestMapping(path = "/")
 	public ModelAndView validate(HttpServletRequest request,
@@ -91,7 +99,10 @@ public class MainController {
 			mv.setViewName("login");
 		} else {
 			if(authenticatedUser.getRole().equals(User.role1)) {
-				mv.addObject("users", userService.findAll());
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
 				mv.addObject("displayAdd", true);
 				mv.setViewName("DonationManagement");
 			} else {
@@ -175,7 +186,7 @@ public class MainController {
 	}
 
 	@RequestMapping(path = "/edituser", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser, @RequestParam("id") int id) {
+	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser, @RequestParam("id") long id) {
 		ModelAndView mv = new ModelAndView();
 		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
 		if (authenticatedUser.getRole().equals(User.role1)) {
@@ -206,7 +217,7 @@ public class MainController {
 	}
 
 	@RequestMapping(path = "/saveuser", method = RequestMethod.POST)
-	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") int id,
+	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") long id,
 			@ModelAttribute("UserForm") User user) {
 
 		ModelAndView mv = new ModelAndView();
@@ -247,5 +258,95 @@ public class MainController {
 		mv.setViewName("UserManagement");
 		return mv;
 	}
+//	Donations
+	@RequestMapping(path = "/adddonation", method = RequestMethod.GET)
+	public ModelAndView addDonation(HttpServletRequest request, @ModelAttribute("DonationInsertion") Donation newDonation) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			mv.addObject("newDonation", new Donation());
+			List<Donation> donations = donationService.findAll();
+			mv.addObject("donations", donations);
+			if(donations.isEmpty())
+				mv.addObject("Success", emptyDonationList);
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+		}
+		mv.addObject("displayAdd", false);
+		mv.setViewName("DonationManagement");
+		return mv;
+	}
+	@RequestMapping(path = "/editdonation", method = RequestMethod.GET)
+	public ModelAndView editDonation(HttpServletRequest request, @ModelAttribute("DonationInsertion") Donation newDonation, @RequestParam("id") long id) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			Donation donation = donationService.findById(id);
+			if (authenticatedUser.getId() == id) {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.addObject("displayAdd", true);
+				mv.addObject("Failure", donationEditionFailure);
+			} else {
+				mv.addObject("newDonation", donation);
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.addObject("displayAdd", false);
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		mv.setViewName("DonationManagement");
+		return mv;
+	}
+	@RequestMapping(path = "/deletedonation", method = RequestMethod.GET)
+	public ModelAndView deleteDonation(HttpServletRequest request, @RequestParam("id") long id) {
 
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			mv.addObject("displayAdd", true);
+			if (authenticatedUser.getId() == id) {
+				mv.addObject("Failure", donationDeletionFailure);
+			} else {
+				donationService.deleteById(id);
+				mv.addObject("Success", donationDeletionSuccess);
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		List<Donation> donations = donationService.findAll();
+		mv.addObject("donations", donations);
+		if(donations.isEmpty())
+			mv.addObject("Success", emptyDonationList);
+		mv.setViewName("DonationManagement");
+		return mv;
+	}
+	@RequestMapping(path = "/savedonation", method = RequestMethod.POST)
+	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") long id,
+			@ModelAttribute("Donation") Donation donation) {
+
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser.getRole().equals(User.role1)) {
+			donationService.save(donation);
+			mv.addObject("Success", donationAdditionSuccess);
+			mv.addObject("displayAdd", true);
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.addObject("displayAdd", false);
+		}
+		List<Donation> donations = donationService.findAll();
+		mv.addObject("donations", donations);
+		if(donations.isEmpty())
+			mv.addObject("Success", emptyDonationList);
+		mv.setViewName("DonationManagement");
+		return mv;
+	}
 }

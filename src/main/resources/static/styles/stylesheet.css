@@ -87,6 +87,9 @@ h1{
 .add-user{
 	text-alignment: right;
 }
+.add-donation{
+	text-alignment: right;
+}
 img {
 	border: 1px solid #ddd;
 	border-radius: 4px;
