@@ -28,7 +28,7 @@ public class User {
 	String username;
 	String password;
 	
-	public String getFirsrtName() {
+	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
