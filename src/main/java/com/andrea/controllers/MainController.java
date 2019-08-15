@@ -3,6 +3,7 @@ package com.andrea.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,21 @@ public class MainController {
 
 	@Autowired
 	UserService userService;
+	
+	@Value("${exception.authentication.invalidUser}") 
+	String invalidUser;
+	@Value("${exception.authentication.invalidCredentials}") 
+	String invalidCredentials;
+	@Value("${exception.privileges.insufficientPrivileges}") 
+	String insufficientPrivileges;
+	@Value("${failure.user.deletion}") 
+	String userDeletionFailure;
+	@Value("${failure.user.edition}") 
+	String userEditionFailure;
+	@Value("${success.user.insertion}") 
+	String userAdditionSuccess;
+	@Value("${success.user.deletion}") 
+	String userDeletionSuccess;
 
 	@RequestMapping(path = "/")
 	public ModelAndView validate(HttpServletRequest request,
@@ -70,7 +86,6 @@ public class MainController {
 				mv.setViewName("UserView");
 			}
 		}
-		System.out.println(authenticatedUser.getRole());
 		return mv;
 	}
 	@RequestMapping(path = "/userview", method=RequestMethod.GET)
@@ -93,7 +108,7 @@ public class MainController {
 			mv.addObject("newUser", new User());
 			mv.addObject("users", userService.findAll());
 		} else {
-			mv.addObject("invalidRoleException", "you are missing the privileges to perform this action");
+			mv.addObject("invalidRoleException", insufficientPrivileges);
 		}
 		mv.addObject("displayAdd", false);
 		mv.setViewName("UserManagement");
@@ -115,7 +130,7 @@ public class MainController {
 		User user = userService.findByUsername(userLoginForm.getUsername());
 		if (user == null) {
 			mv.setViewName("login");
-			mv.addObject("AuthenticationException", "The user \'" + userLoginForm.getUsername() + "\' does not exist");
+			mv.addObject("AuthenticationException", invalidUser);
 		} else {
 			if (user.getPassword().equals(userLoginForm.getPassword())) {
 				request.getSession().setAttribute("authenticatedUser", user);
@@ -129,7 +144,7 @@ public class MainController {
 				return mv;
 			} else {
 				mv.setViewName("login");
-				mv.addObject("AuthenticationException", "Invalid Credentials");
+				mv.addObject("AuthenticationException", invalidCredentials);
 			}
 		}
 		return mv;
@@ -144,14 +159,14 @@ public class MainController {
 			if (authenticatedUser.getId() == id) {
 				mv.addObject("users", userService.findAll());
 				mv.addObject("displayAdd", true);
-				mv.addObject("operationStatus", "user cannot not be edited");
+				mv.addObject("OperationFail", userEditionFailure);
 			} else {
 				mv.addObject("newUser", user);
 				mv.addObject("users", userService.findAll());
 				mv.addObject("displayAdd", false);
 			}
 		} else {
-			mv.addObject("invalidRoleException", "you are missing the privileges to perform this action");
+			mv.addObject("invalidRoleException", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.setViewName("UserManagement");
@@ -176,10 +191,10 @@ public class MainController {
 			userService.save(user);
 			if(authenticatedUser.getId() ==id)
 				request.getSession().setAttribute("authenticatedUser", user);
-			mv.addObject("operationStatus", "user saved successfully!");
+			mv.addObject("operationStatus", userAdditionSuccess);
 			mv.addObject("displayAdd", true);
 		} else {
-			mv.addObject("invalidRoleException", "you are missing the privileges to perform this action");
+			mv.addObject("invalidRoleException", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.addObject("users", userService.findAll());
@@ -195,13 +210,13 @@ public class MainController {
 		if (authenticatedUser.getRole().equals(User.role1)) {
 			mv.addObject("displayAdd", true);
 			if (authenticatedUser.getId() == id) {
-				mv.addObject("operationStatus", "user could not be deleted");
+				mv.addObject("operationFail", userDeletionFailure);
 			} else {
 				userService.deleteById(id);
-				mv.addObject("operationStatus", "user deleted successfully!");
+				mv.addObject("operationStatus", userDeletionSuccess);
 			}
 		} else {
-			mv.addObject("invalidRoleException", "you are missing the privileges to perform this action");
+			mv.addObject("invalidRoleException", insufficientPrivileges);
 			mv.addObject("displayAdd", false);
 		}
 		mv.addObject("users", userService.findAll());
