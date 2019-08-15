@@ -16,7 +16,7 @@ public class Donation {
 	String name;
 	String date;
 	double amt;
-	String DonationType;
+	String donationType;
 	
 	
 	public String getName() {
@@ -38,10 +38,10 @@ public class Donation {
 		this.amt = amt;
 	}
 	public String getDonationType() {
-		return DonationType;
+		return donationType;
 	}
 	public void setDonationType(String donationType) {
-		DonationType = donationType;
+		donationType = donationType;
 	}
 	
 	

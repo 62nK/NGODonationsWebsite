@@ -1,5 +1,7 @@
 package com.andrea.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.andrea.model.info.UserLoginForm;
+import com.ketu.model.beans.Donation;
 import com.ketu.model.beans.User;
+import com.tariq.models.services.DonationService;
 import com.tariq.models.services.UserService;
 
 @Controller
@@ -22,6 +26,8 @@ public class MainController {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	DonationService donationService;
 	
 	@Value("${exception.authentication.invalidUser}") 
 	String invalidUser;
@@ -37,7 +43,9 @@ public class MainController {
 	String userAdditionSuccess;
 	@Value("${success.user.deletion}") 
 	String userDeletionSuccess;
-
+	@Value("${success.donation.emptylist}") 
+	String emptyDonationList;
+	
 	@RequestMapping(path = "/")
 	public ModelAndView validate(HttpServletRequest request,
 			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
@@ -65,6 +73,10 @@ public class MainController {
 				mv.addObject("displayAdd", true);
 				mv.setViewName("UserManagement");
 			} else {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
 				mv.setViewName("UserView");
 			}
 		}
@@ -83,6 +95,10 @@ public class MainController {
 				mv.addObject("displayAdd", true);
 				mv.setViewName("DonationManagement");
 			} else {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
 				mv.setViewName("UserView");
 			}
 		}
@@ -96,6 +112,10 @@ public class MainController {
 		if (authenticatedUser == null) {
 			mv.setViewName("login");
 		} else {
+			List<Donation> donations = donationService.findAll();
+			mv.addObject("donations", donations);
+			if(donations.isEmpty())
+				mv.addObject("Success", emptyDonationList);
 			mv.setViewName("UserView");
 		}
 		return mv;
@@ -139,6 +159,10 @@ public class MainController {
 					mv.setViewName("UserManagement");
 					mv.addObject("displayAdd", true);
 				} else if (user.getRole().equals(User.role2)) {
+					List<Donation> donations = donationService.findAll();
+					mv.addObject("donations", donations);
+					if(donations.isEmpty())
+						mv.addObject("Exception", emptyDonationList);
 					mv.setViewName("UserView");
 				}
 				return mv;

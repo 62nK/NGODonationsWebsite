@@ -64,7 +64,7 @@
 					<table>
 						<tr>
 							<td><form:label path="id">id:</form:label></td>
-							<td><form:input path="id" value="${newUser.id}" readonly/></td>
+							<td><form:input path="id" value="${newUser.id}" readonly="true"/></td>
 						</tr>
 						<tr>
 							<td><form:label path="username">username:</form:label></td>
