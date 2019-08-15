@@ -22,19 +22,20 @@
 		</c:if>
 
 		<div class="dynamic-content">
-			<c:out value="${AuthenticationException}" />
-			<c:out value="${invalidRoleException}" />
+			<p class="exception">${AuthenticationException}</p>
+			<p class="exception">${invalidRoleException}</p>
+
 			<c:if test="${displayAdd}">
-				<td><a class="add-user" href="admin/adduser">Add User</a></td>
-				</c:if>
+				<td><a class="add-user" href="adduser">Add User</a></td>
+			</c:if>
 			<c:if test="${!empty users}">
 				<h2>List of registered users</h2>
-				
-				<table align="left" border="1">
+
+				<table>
 					<tr>
-						<th>User ID</th>
-						<th>User First Name</th>
-						<th>User Last Name</th>
+						<th>ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
 						<th>E-mail</th>
 						<th>Role</th>
 						<th></th>
@@ -49,18 +50,29 @@
 							<td><c:out value="${user.email}" /></td>
 							<td><c:out value="${user.role}" /></td>
 							<td><a href="admin/user/edit?id=${user.id}">Edit</a></td>
-							<td><a href="admin/user/delete?id=${user.id}">Delete</a></td>
+							<td><a href="deleteuser?id=${user.id}">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</c:if>
+			<p class="exception">${AuthenticationException}</p>
+
 			<c:if test="${!empty newUser}">
-				<form:form method="POST" action="admin/saveuser"
+				<form:form method="POST" action="/saveuser"
 					modelAttribute="UserInsertion">
 					<table>
 						<tr>
+							<td><form:label path="id">id:</form:label></td>
+							<td><form:input path="id" value="${newUser.id}" /></td>
+						</tr>
+						<tr>
 							<td><form:label path="username">username:</form:label></td>
 							<td><form:input path="username" value="${newUser.username}" /></td>
+						</tr>
+						<tr>
+							<td><form:label path="password">password:</form:label></td>
+							<td><form:input path="password" type="password"
+									value="${newUser.password}" /></td>
 						</tr>
 						<tr>
 							<td><form:label path="firstName">First Name:</form:label></td>
@@ -78,7 +90,10 @@
 
 						<tr>
 							<td><form:label path="role">Role:</form:label></td>
-							<td><form:input path="role" value="${newUser.role}" /></td>
+							<td><select name="role" value="${newUser.role}">
+									<option value="role1">ADMIN</option>
+									<option value="role2">REGULAR</option>
+							</select></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="submit" value="save" /></td>

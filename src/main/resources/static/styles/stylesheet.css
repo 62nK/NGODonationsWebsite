@@ -13,10 +13,11 @@ h1{
     color: black;
     font-size: 60px;
     opacity: 1;
+    margin: 20px;
 }
 .header {
-  height: 80px;
-	padding: 10px;
+  height: 100px;
+	padding: 10px;;
 	text-align: center;
   background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)),
   url("/images/header.jpg");
@@ -87,6 +88,7 @@ table {
 	background: #DEF;
 	border-radius: 4px;
 	 padding: 20px;
+	 margin:20px;
 	
 }
 
