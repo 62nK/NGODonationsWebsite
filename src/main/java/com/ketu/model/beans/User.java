@@ -1,6 +1,5 @@
 package com.ketu.model.beans;
 
-import java.util.Comparator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,19 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
 
 @Entity
-<<<<<<< HEAD
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-	
-	@Id
-	@GeneratedValue (strategy = GenerationType.SEQUENCE)
-	private int id;
-=======
-@Table(name="users")
-public class User{
 	
 	public transient static final String role1 = "ADMIN";
 	public transient static final String role2 = "REGULAR";
@@ -29,7 +19,6 @@ public class User{
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE)
 	private long id;
->>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 	String firstName;
 	String lastName;
 	String email;
@@ -39,19 +28,11 @@ public class User{
 	String username;
 	String password;
 	
-<<<<<<< HEAD
 	public String getFirsrtName() {
-		return firstName;
-	}
-	public void setFirsrtName(String firsrtName) {
-		this.firstName = firsrtName;
-=======
-	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
->>>>>>> bf7df1a1e733b9fdc2396708ecce62342bb031e3
 	}
 	public String getLastName() {
 		return lastName;
@@ -95,14 +76,6 @@ public class User{
 	public void setPassword(String passwd) {
 		this.password = passwd;
 	} 
-	
-	public boolean equals(User u) {
-		return u.getFirstName() == firstName &&
-				u.getLastName() == lastName &&
-				u.getId() == id &&
-				u.getUsername() == username &&
-				u.getPassword() == password;
-	}
 	public String toString() {
 		return "user"+"...";
 	}
