@@ -372,7 +372,8 @@ public class MainController {
 	
 	@RequestMapping(path="/makegift", method=RequestMethod.POST)
 	public ModelAndView submitGifts(HttpServletRequest request, @RequestParam("action") String action, 
-			@ModelAttribute("GiftForm") GiftForm sc) {
+			@ModelAttribute("GiftForm") GiftForm giftForm) {
+		System.out.println("size: "+giftForm.size());
 		ModelAndView mv = new ModelAndView();
 		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
 		Donation donation = (Donation) request.getSession().getAttribute("donationSelection");
@@ -380,7 +381,7 @@ public class MainController {
 			if(action.equals("continue")) {
 				mv.addObject("userInfo", authenticatedUser);
 				request.getSession().setAttribute("donationSelection", donation);
-				mv.addObject("gifts", sc);
+				mv.addObject("gifts", giftForm);
 				mv.setViewName("shoppingCart");
 			}else if(action.equals("cancel")) {
 				List<Donation> donations = donationService.findAll();
