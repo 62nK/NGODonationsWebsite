@@ -14,7 +14,9 @@
 <body>
 
 	<%@ include file="_header.html"%>
-
+	<c:if test="${!empty authenticatedUser}">
+		<%@ include file="userBar.jsp"%>
+	</c:if>
 	<div class="container">
 		<c:if test="${authenticatedUser.role=='ADMIN'}">
 			<div class="sidenav"><%@ include file="_menu.jsp"%></div>
@@ -27,29 +29,29 @@
 			<c:if test="${!empty donations}">
 				<h2>List of donations</h2>
 
-					<table>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Date</th>
-							<th>Amount</th>
-							<th>Type</th>
-							<th></th>
-							<th></th>
-						</tr>
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Date</th>
+						<th>Amount</th>
+						<th>Type</th>
+						<th></th>
+						<th></th>
+					</tr>
 
-						<c:forEach items="${donations}" var="donation">
-							<tr>
-								<td><c:out value="${donation.id}" /></td>
-								<td><c:out value="${donation.name}" /></td>
-								<td><c:out value="${donation.date}" /></td>
-								<td><c:out value="${donation.amount}" /></td>
-								<td><c:out value="${donation.type}" /></td>
-								<td><a href="editdonation?id=${donation.id}">Edit</a></td>
-								<td><a href="deletedonation?id=${donation.id}">Delete</a></td>
-							</tr>
-						</c:forEach>
-					</table>
+					<c:forEach items="${donations}" var="donation">
+						<tr>
+							<td><c:out value="${donation.id}" /></td>
+							<td><c:out value="${donation.name}" /></td>
+							<td><c:out value="${donation.date}" /></td>
+							<td><c:out value="${donation.amount}" /></td>
+							<td><c:out value="${donation.type}" /></td>
+							<td><a href="editdonation?id=${donation.id}">Edit</a></td>
+							<td><a href="deletedonation?id=${donation.id}">Delete</a></td>
+						</tr>
+					</c:forEach>
+				</table>
 			</c:if>
 			<p class="success">${Success}</p>
 			<p class="exception">${Failure}</p>
@@ -75,8 +77,7 @@
 						</tr>
 						<tr>
 							<td><form:label path="amount">Amount:</form:label></td>
-							<td><form:input path="amount"
-									value="${newDonation.amount}" /></td>
+							<td><form:input path="amount" value="${newDonation.amount}" /></td>
 						</tr>
 						<tr>
 							<td><form:label path="type">Type:</form:label></td>

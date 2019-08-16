@@ -1,7 +1,14 @@
 package com.ketu.model.beans;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Address {
 	
+	@Id
+	long id;
 	String street;
 	String city;
 	String state;
@@ -9,6 +16,18 @@ public class Address {
 	String country;
 	
 	
+	public long getId() {
+		return id;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
 	public String getStreet() {
 		return street;
 	}

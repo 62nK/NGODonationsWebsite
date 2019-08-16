@@ -14,7 +14,9 @@
 <body>
 
 	<%@ include file="_header.html"%>
-
+	<c:if test="${!empty authenticatedUser}">
+		<%@ include file="userBar.jsp"%>
+	</c:if>
 	<div class="container">
 		<c:if test="${authenticatedUser.role=='ADMIN'}">
 			<div class="sidenav"><%@ include file="_menu.jsp"%></div>
@@ -55,7 +57,7 @@
 			</c:if>
 			<p class="success">${Success}</p>
 			<p class="exception">${Failure}</p>
-		
+
 
 			<c:if test="${!empty newUser}">
 				<form:form method="POST" action="/saveuser"
@@ -63,7 +65,8 @@
 					<table>
 						<tr>
 							<td><form:label path="id">id:</form:label></td>
-							<td><form:input path="id" value="${newUser.id}" readonly="true"/></td>
+							<td><form:input path="id" value="${newUser.id}"
+									readonly="true" /></td>
 						</tr>
 						<tr>
 							<td><form:label path="username">username:</form:label></td>

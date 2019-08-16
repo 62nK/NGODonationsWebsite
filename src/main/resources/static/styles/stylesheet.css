@@ -29,6 +29,16 @@ h1{
   background-size: cover;
   position: relative;
 }
+.user-bar {
+  height: 20px;
+	padding: 10px;;
+	text-align: right;
+	border-radius: 6px;
+  position: relative;
+  	background: var(--maincolor);
+  	margin-top: 30px;
+  
+}
 
 .footer {
 	padding: 30px;

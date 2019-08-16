@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Log in</title>
+<title>Gifts</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/styles/stylesheet.css" />
 </head>
@@ -24,13 +24,20 @@
 		<div class="dynamic-content">
 			<p class="exception">${Exception}</p>
 
-			<h3>Select the donation type</h3>
+			<h3>Gifts</h3>
 			<c:if test="${!empty donations}">
-				<form:form method="POST" action="/makedonation">
-					<c:forEach items="${donations}" var="donation">
-						<button type="submit" name="id" value="${donation.id}" >${donation.type}</button>
-						<br>
-					</c:forEach>
+				<form:form method="POST" action="/makegift"
+					modelAttribute="GiftForm">
+					<table>
+						<c:forEach items="${gifts}" var="gift">
+							<tr>
+								<td><c:out value="${gift.key.type}"/></td>
+								<td><input name="${gifts[gift.key]}"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+					<input type="submit" name="action" value="continue" />
+					<input type="submit" name="action" value="cancel" />
 				</form:form>
 
 			</c:if>

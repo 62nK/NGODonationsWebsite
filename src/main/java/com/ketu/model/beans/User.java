@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -27,6 +30,9 @@ public class User {
     @Column(name="username", unique=true)
 	String username;
 	String password;
+	@ManyToOne(targetEntity = Address.class)
+	@JoinColumn(referencedColumnName = "id")
+	Address address;
 	
 	public String getFirstName() {
 		return firstName;
@@ -78,6 +84,12 @@ public class User {
 	} 
 	public String toString() {
 		return "user"+"...";
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

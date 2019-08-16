@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.andrea.model.info.GiftForm;
 import com.andrea.model.info.UserLoginForm;
 import com.ketu.model.beans.Donation;
 import com.ketu.model.beans.User;
@@ -62,9 +63,17 @@ public class MainController {
 		if (authenticatedUser == null) {
 			mv.setViewName("login");
 		} else {
-			mv.addObject("users", userService.findAll());
-			mv.addObject("displayAdd", true);
-			mv.setViewName("UserManagement");
+			if(authenticatedUser.getRole().equals(User.role1)) {
+				mv.addObject("users", userService.findAll());
+				mv.addObject("displayAdd", true);
+				mv.setViewName("UserManagement");
+			} else {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.setViewName("UserView");
+			}
 		}
 		return mv;
 	}
@@ -145,7 +154,6 @@ public class MainController {
 		mv.setViewName("UserManagement");
 		return mv;
 	}
-
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
 			@ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
@@ -153,7 +161,6 @@ public class MainController {
 		mv.addObject("UserLoginForm", new UserLoginForm());
 		return mv;
 	}
-
 	@RequestMapping(path = "/signin", method = RequestMethod.POST)
 	public ModelAndView signin(HttpServletRequest request, @ModelAttribute("UserLoginForm") UserLoginForm userLoginForm,
 			@ModelAttribute("UserInsertion") User newUser) {
@@ -184,7 +191,7 @@ public class MainController {
 		}
 		return mv;
 	}
-
+	
 	@RequestMapping(path = "/edituser", method = RequestMethod.GET)
 	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("UserInsertion") User newUser, @RequestParam("id") long id) {
 		ModelAndView mv = new ModelAndView();
@@ -207,15 +214,6 @@ public class MainController {
 		mv.setViewName("UserManagement");
 		return mv;
 	}
-
-	@RequestMapping(path = "/canceluser", method = RequestMethod.GET)
-	public ModelAndView cancelUser(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("displayAdd", true);
-		mv.setViewName("UserManagement");
-		return mv;
-	}
-
 	@RequestMapping(path = "/saveuser", method = RequestMethod.POST)
 	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") long id,
 			@ModelAttribute("UserForm") User user) {
@@ -236,7 +234,6 @@ public class MainController {
 		mv.setViewName("UserManagement");
 		return mv;
 	}
-
 	@RequestMapping(path = "/deleteuser", method = RequestMethod.GET)
 	public ModelAndView deleteUser(HttpServletRequest request, @RequestParam("id") long id) {
 
@@ -258,7 +255,15 @@ public class MainController {
 		mv.setViewName("UserManagement");
 		return mv;
 	}
-//	Donations
+	@RequestMapping(path = "/canceluser", method = RequestMethod.GET)
+	public ModelAndView cancelUser(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("displayAdd", true);
+		mv.setViewName("UserManagement");
+		return mv;
+	}
+
+	//	Donations
 	@RequestMapping(path = "/adddonation", method = RequestMethod.GET)
 	public ModelAndView addDonation(HttpServletRequest request, @ModelAttribute("DonationInsertion") Donation newDonation) {
 		ModelAndView mv = new ModelAndView();
@@ -329,7 +334,7 @@ public class MainController {
 		return mv;
 	}
 	@RequestMapping(path = "/savedonation", method = RequestMethod.POST)
-	public ModelAndView saveUser(HttpServletRequest request, @RequestParam("id") long id,
+	public ModelAndView saveDonation(HttpServletRequest request, @RequestParam("id") long id,
 			@ModelAttribute("Donation") Donation donation) {
 
 		ModelAndView mv = new ModelAndView();
@@ -349,4 +354,82 @@ public class MainController {
 		mv.setViewName("DonationManagement");
 		return mv;
 	}
+	@RequestMapping(path="/makedonation", method=RequestMethod.POST)
+	public ModelAndView makeDonation(HttpServletRequest request, @RequestParam("id") long id,
+			@ModelAttribute("UserInfo") User user) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		if (authenticatedUser!=null) {
+			mv.addObject("userInfo", authenticatedUser);
+			request.getSession().setAttribute("donationSelection", donationService.findById(id));
+			mv.setViewName("personal");
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.setViewName("login");
+		}
+		return mv;
+	}
+	
+	@RequestMapping(path="/makegift", method=RequestMethod.POST)
+	public ModelAndView submitGifts(HttpServletRequest request, @RequestParam("action") String action, 
+			@ModelAttribute("GiftForm") GiftForm sc) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		Donation donation = (Donation) request.getSession().getAttribute("donationSelection");
+		if (authenticatedUser!=null) {
+			if(action.equals("continue")) {
+				mv.addObject("userInfo", authenticatedUser);
+				request.getSession().setAttribute("donationSelection", donation);
+				mv.addObject("gifts", sc);
+				mv.setViewName("shoppingCart");
+			}else if(action.equals("cancel")) {
+				List<Donation> donations = donationService.findAll();
+				mv.addObject("donations", donations);
+				if(donations.isEmpty())
+					mv.addObject("Success", emptyDonationList);
+				mv.setViewName("UserView");
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.setViewName("login");
+		}
+		return mv;
+	}
+	@RequestMapping(path="/signout", method=RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request, @ModelAttribute("UserLoginForm") UserLoginForm userLoginForm) {
+		request.getSession().invalidate();
+		ModelAndView mv = new ModelAndView("login");
+		return mv;
+	}
+	
+	@RequestMapping(path="/submituserinfo", method=RequestMethod.POST)
+	public ModelAndView submitUserInfo(HttpServletRequest request, @RequestParam("action") String action,
+			@ModelAttribute("GiftForm") GiftForm giftForm) {
+		ModelAndView mv = new ModelAndView();
+		User authenticatedUser = (User) request.getSession().getAttribute("authenticatedUser");
+		Donation donation = (Donation) request.getSession().getAttribute("donationSelection");
+		if (authenticatedUser!=null) {
+			List<Donation> donations = donationService.findAll();
+			mv.addObject("donations", donations);
+			if(donations.isEmpty())
+				mv.addObject("Success", emptyDonationList);
+			if(action.equals("continue")) {
+				mv.addObject("userInfo", authenticatedUser);
+				request.getSession().setAttribute("donationSelection", donation);
+				GiftForm gifts = new GiftForm();
+				for(Donation d: donations) {
+					gifts.put(d, 1d);
+				}
+				mv.addObject("gifts", gifts);
+				mv.setViewName("gifts");
+			}else if(action.equals("cancel")) {
+				mv.setViewName("UserView");
+			}
+		} else {
+			mv.addObject("Exception", insufficientPrivileges);
+			mv.setViewName("login");
+		}
+		return mv;
+	}
+	
 }
